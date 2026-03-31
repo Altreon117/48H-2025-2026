@@ -1,0 +1,228 @@
+/* ═══════════════════════════════════════════════════
+   AdminCards.css — layout cards pour Users & Posts
+   ═══════════════════════════════════════════════════ */
+
+/* ── Avatar initiales ─────────────────────────────── */
+.ac-avatar {
+  border-radius: 50%;
+  background: var(--color-turquoise-light);
+  border: 2px solid rgba(28, 177, 179, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--color-turquoise-dark);
+  flex-shrink: 0;
+  letter-spacing: -0.3px;
+}
+
+/* ── Identité (nom + username) ────────────────────── */
+.ac-card-identity {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1;
+}
+.ac-card-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ac-card-username {
+  font-size: 12px;
+  color: var(--color-text-dim);
+}
+
+/* ── Actions boutons ──────────────────────────────── */
+.ac-card-actions {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* ══════════════════════════════════════════════════
+   USERS — grille 2 colonnes
+   ══════════════════════════════════════════════════ */
+.ac-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+.ac-card {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: box-shadow var(--transition-fast);
+}
+.ac-card:hover { box-shadow: var(--shadow-md); }
+
+.ac-card-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ac-badge-role {
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+.ac-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 10px;
+  background: var(--color-bg-soft);
+  border-radius: var(--radius-md);
+  min-height: 36px;
+}
+.ac-meta-item {
+  font-size: 12.5px;
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
+}
+.ac-meta-dim { color: var(--color-text-dim); }
+.ac-meta-badge { font-size: 10px !important; }
+
+.ac-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--color-border);
+  flex-wrap: wrap;
+}
+.ac-card-date {
+  font-size: 11.5px;
+  color: var(--color-text-dim);
+}
+
+/* ══════════════════════════════════════════════════
+   POSTS — liste pleine largeur
+   ══════════════════════════════════════════════════ */
+.ac-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ac-post-card {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: box-shadow var(--transition-fast);
+}
+.ac-post-card:hover { box-shadow: var(--shadow-md); }
+
+.ac-post-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.ac-post-date {
+  font-size: 12px;
+  color: var(--color-text-dim);
+  margin-left: auto;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.ac-post-content {
+  font-size: 13.5px;
+  color: var(--color-text-secondary);
+  line-height: 1.55;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  padding: 0 2px;
+}
+
+.ac-post-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--color-border);
+  flex-wrap: wrap;
+}
+
+.ac-post-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.ac-meta-stat {
+  font-size: 12.5px;
+  color: var(--color-text-muted);
+  font-weight: 500;
+}
+
+.ac-comments-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  background: var(--color-bg-soft);
+  color: var(--color-text-secondary);
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: var(--font-body);
+  transition: all var(--transition-fast);
+}
+.ac-comments-btn:hover {
+  background: var(--color-bg-info);
+  border-color: var(--color-turquoise);
+  color: var(--color-turquoise);
+}
+
+/* ── Responsive ───────────────────────────────────── */
+@media (max-width: 900px) {
+  .ac-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .ac-post-header {
+    flex-wrap: wrap;
+  }
+  .ac-post-date {
+    width: 100%;
+    margin-left: 0;
+    padding-left: 46px; /* aligne avec le texte après l'avatar */
+  }
+  .ac-post-footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .ac-card-footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .ac-card-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+}

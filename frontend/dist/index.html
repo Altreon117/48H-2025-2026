@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>YnovConnect — Réseau Social du Campus</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap"
+    rel="stylesheet" />
+  <script type="module" crossorigin src="/assets/index-C4VIOpqZ.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-Y6RcVkH8.css">
+</head>
+
+<body>
+  <div id="root"></div>
+</body>
+<!-- Pulse Analytics -->
+<script>
+  (function () {
+    var k = "ps_f0c59994e3684bda";
+    var u = "https://kiymvjbztpzodukinxao.supabase.co/functions/v1/track";
+    var s = sessionStorage.getItem("_ps") || Math.random().toString(36).slice(2);
+    sessionStorage.setItem("_ps", s);
+    var v = localStorage.getItem("_pv") || Math.random().toString(36).slice(2) + Math.random().toString(36).slice(2);
+    localStorage.setItem("_pv", v);
+
+    var q = [];
+    var timer = null;
+    var FLUSH_INTERVAL = 1000;
+    var MAX_BATCH = 20;
+
+    function p(n) {
+      var r = new RegExp("[?&]" + n + "=([^&#]*)");
+      var m = location.search.match(r);
+      return m ? decodeURIComponent(m[1]) : null;
+    }
+
+    function ev() {
+      return {
+        site_key: k,
+        pathname: location.pathname,
+        referrer: document.referrer || null,
+        session_id: s,
+        visitor_id: v,
+        screen_width: screen.width,
+        screen_height: screen.height,
+        language: navigator.language || null,
+        page_title: document.title || null,
+        load_time: null,
+        utm_source: p("utm_source"),
+        utm_medium: p("utm_medium"),
+        utm_campaign: p("utm_campaign"),
+        timestamp: new Date().toISOString()
+      };
+    }
+
+    function send(body, useBeacon) {
+      if (useBeacon && navigator.sendBeacon) {
+        try { return navigator.sendBeacon(u, new Blob([body], { type: "application/json" })); } catch (_) { }
+      }
+      fetch(u, { method: "POST", headers: { "Content-Type": "application/json" }, body: body, keepalive: true }).catch(function () {
+        if (navigator.sendBeacon) {
+          try { navigator.sendBeacon(u, new Blob([body], { type: "application/json" })); } catch (_) { }
+        }
+      });
+      return true;
+    }
+
+    function flush(useBeacon) {
+      if (q.length === 0) return;
+      var batch = q.splice(0, Math.min(q.length, MAX_BATCH));
+      var body = JSON.stringify({ batch: batch });
+      send(body, !!useBeacon);
+      if (q.length > 0) {
+        if (timer) clearTimeout(timer);
+        timer = setTimeout(flush, FLUSH_INTERVAL);
+      }
+    }
+
+    function scheduleFlush() {
+      if (timer) clearTimeout(timer);
+      timer = setTimeout(flush, FLUSH_INTERVAL);
+    }
+
+    function push(e) {
+      q.push(e);
+      if (q.length >= 5) flush(false);
+      else scheduleFlush();
+    }
+
+    function t(withLoadTime) {
+      var e = ev();
+      if (withLoadTime) {
+        try {
+          var nav = performance.getEntriesByType("navigation")[0];
+          if (nav && nav.loadEventEnd > 0) e.load_time = Math.round(nav.loadEventEnd - nav.startTime);
+        } catch (_) { }
+        if (e.load_time !== null && e.load_time <= 0) e.load_time = null;
+        if (e.load_time === null) {
+          try { var t0 = performance.timing; if (t0 && t0.loadEventEnd > 0 && t0.navigationStart > 0) { e.load_time = t0.loadEventEnd - t0.navigationStart; if (e.load_time <= 0) e.load_time = null; } } catch (_) { }
+        }
+      }
+      push(e);
+    }
+
+    if (document.readyState === "complete") { setTimeout(function () { t(true); flush(false); }, 0); }
+    else window.addEventListener("load", function () { setTimeout(function () { t(true); flush(false); }, 50); });
+
+    var hp = history.pushState;
+    history.pushState = function () { hp.apply(this, arguments); t(false); };
+
+    var hr = history.replaceState;
+    history.replaceState = function () { hr.apply(this, arguments); t(false); };
+
+    window.addEventListener("popstate", function () { t(false); });
+
+    document.addEventListener("visibilitychange", function () {
+      if (document.visibilityState === "hidden") flush(true);
+    });
+    window.addEventListener("pagehide", function () { flush(true); });
+    window.addEventListener("beforeunload", function () { flush(true); });
+  })();
+</script>
+<!-- No-JS fallback pixel -->
+<noscript><img src="https://kiymvjbztpzodukinxao.supabase.co/functions/v1/track?k=ps_f0c59994e3684bda" alt="" width="1"
+    height="1" style="position:absolute;top:-1px;left:-1px" /></noscript>
+
+</html>

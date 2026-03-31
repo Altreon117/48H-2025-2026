@@ -1,0 +1,235 @@
+/* ═══════════════════════════════════════
+   MAIN HEADER — barre de recherche globale
+   S'inscrit dans .main-content (flex: 1, margin-left: var(--sidebar-width))
+   ═══════════════════════════════════════ */
+
+.main-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  width: 100%;
+  padding: 14px 24px 16px;
+  /* Même fond dégradé que le bg global pour se fondre */
+  background: linear-gradient(
+    180deg,
+    rgba(244, 246, 248, 0.97) 0%,
+    rgba(244, 246, 248, 0.90) 70%,
+    rgba(244, 246, 248, 0) 100%
+  );
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(221, 226, 232, 0.7);
+  box-shadow: 0 2px 16px rgba(26, 31, 46, 0.04);
+}
+
+/* Centrage aligné sur .page-container (max-width: 1080px) */
+.main-header-inner {
+  max-width: 1080px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Barre de recherche centrée, largeur max limitée */
+.main-header-search-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+}
+
+.main-header-search-form {
+  position: relative;
+  display: block;
+}
+
+.main-header-search-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-text-dim);
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+}
+
+.main-header-search-input {
+  width: 100%;
+  padding-left: 44px !important;
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+  border-radius: var(--radius-full) !important;
+  border: 1.5px solid var(--color-border) !important;
+  background: var(--color-white) !important;
+  box-shadow: var(--shadow-xs);
+  font-size: 14px;
+  transition:
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.main-header-search-input:focus {
+  border-color: var(--color-turquoise) !important;
+  box-shadow: 0 0 0 3px var(--color-turquoise-mid), var(--shadow-xs) !important;
+}
+
+/* Dropdown résultats */
+.main-header-dropdown {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(100% + 8px);
+  padding: 6px;
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 50;
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-white);
+}
+
+.main-header-dropdown-empty {
+  padding: 14px 16px;
+  font-size: 13px;
+  color: var(--color-text-muted);
+  margin: 0;
+  text-align: center;
+}
+
+.main-header-result {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  width: 100%;
+  text-align: left;
+  padding: 10px 12px;
+  border: none;
+  border-radius: var(--radius-md);
+  background: transparent;
+  cursor: pointer;
+  font-family: var(--font-body);
+  transition: background var(--transition-fast);
+}
+
+.main-header-result:hover {
+  background: var(--color-bg-info);
+}
+
+.main-header-result-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.main-header-result-meta {
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+
+/* Accessibilité */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ── Tablette large < 1100px ──────────────────────── */
+@media (max-width: 1100px) {
+  .main-header-search-wrap {
+    max-width: 480px;
+  }
+}
+
+/* ── Tablette < 900px ─────────────────────────────── */
+@media (max-width: 900px) {
+  .main-header {
+    padding: 12px 20px 14px;
+  }
+
+  .main-header-search-wrap {
+    max-width: 100%;
+  }
+}
+
+/* ── Mobile < 768px (sidebar masquée, margin-left: 0) ── */
+@media (max-width: 768px) {
+  .main-header {
+    /*
+     * position: sticky (pas fixed) — PageWrapper applique des transform
+     * pour les transitions de page, ce qui casse position:fixed sur ses enfants.
+     * sticky n'est pas affecté par les transform parents.
+     */
+    position: sticky;
+    top: 0;
+    padding: 10px 14px 12px;
+    /* Fond solide — backdrop-filter cause des repaints à chaque frame mobile */
+    background: #f4f6f8;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border-bottom: 1px solid var(--color-border);
+    box-shadow: 0 1px 6px rgba(26, 31, 46, 0.08);
+    /* Layer GPU dédié pour un collage fluide */
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+  }
+
+  .main-header-inner {
+    max-width: 100%;
+    justify-content: stretch;
+  }
+
+  .main-header-search-wrap {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  /* Respect de la règle anti-zoom iOS du global.css */
+  .main-header-search-input {
+    padding-top: 9px !important;
+    padding-bottom: 9px !important;
+    font-size: 16px !important;
+  }
+
+  .main-header-dropdown {
+    max-height: 220px;
+    left: 0;
+    right: 0;
+  }
+
+  .main-header-result {
+    padding: 9px 10px;
+  }
+
+  .main-header-result-name {
+    font-size: 13.5px;
+  }
+}
+
+/* ── Très petit mobile < 480px ───────────────────── */
+@media (max-width: 480px) {
+  .main-header {
+    padding: 8px 12px 10px;
+  }
+
+  .main-header-search-icon {
+    left: 11px;
+  }
+
+  .main-header-search-input {
+    padding-left: 38px !important;
+  }
+
+  .main-header-dropdown {
+    max-height: 180px;
+    border-radius: var(--radius-md);
+  }
+}
