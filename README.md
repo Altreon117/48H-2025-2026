@@ -1,5 +1,7 @@
 # YnovConnect - Challenge 48h 2025-2026
 
+Lien démo non complète : https://ynovconnect.skayizen.fr
+
 Plateforme web type reseau social campus avec:
 - authentification (utilisateur + admin)
 - fil de posts
